@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <vector>
+#include <numeric>
+#include <iomanip>
+
+using namespace std;
+
+//Function to find (2n+1)! for sin approximation denominator
+int factorial(int n)
+{
+    if(n>1)
+        return n*factorial(n-1);
+    else
+        return 1;
+}
+
+int main()
+{
+    //Exercise 1: Loop 1
+     
+    int n, i, sum=0;
+    cout<<"Enter an arbitrary value for n -> ";
+    cin>>n;
+    for(i=1; i<=n; i++)
+    {
+        sum+=pow(i,2);
+    }
+    cout<<"The sum of i squared from i to n is "<<sum<<endl;;
+    
+    //Exercise 1: Loop 2
+     
+    int m, j, sum1=0;
+    cout<<"Enter an arbitrary value for m -> ";
+    cin>>m;
+    for(j=1; j<=m; j++)
+    {
+        if(j%2==0)
+            sum1+=j;
+        else
+            sum1-=j;
+    }
+    cout<<"The sum of alternating negative to positive increasing j is "<<sum1<<endl;
+    
+    //Exercise 2: Gaming
+    
+    int r, q=0, count=1, size=1;
+    cout<<"Number guessing game...Pick a number, any number -> ";
+    cin>>r;
+    //create an array to determine if consecutive guesses are the same
+    int vect[size];
+    vect[0]=r;
+    while(r!=44)
+    {
+        if(r==44)
+            cout<<"Correct, you guessed it!"<<endl;
+        else if(r<44)
+            cout<<"That number was too small!"<<endl;
+        else
+            cout<<"That number was too large!"<<endl;
+        cin>>r;
+        vect[size]=r;
+        size++;
+    }
+    //Loop to count guesses, laeving out consecutive guesses of the same number
+    for(q=0; q<size-1; q++)
+        if(vect[q+1]!=vect[q])
+            count++;
+    cout<<"You guessed the number in "<<count<<" turns!"<<endl;
+    
+    //Exercise 3
+    
+    int N, s;
+    float SUM=0, top, bottom=1, x;
+    //Choose any x between 0 and 1
+    cin>>x;
+    cout<<setprecision(6)<<sin(x)<<endl;
+    cin>>N;
+    for(s=0; s<=N; s++)
+    {
+        top=((pow(-1,s))*(pow(x,((2*s)+1))));
+        bottom=factorial(2*s+1);
+        SUM+=(top/bottom);
+    }
+    cout<<setprecision(6)<<SUM<<endl;
+    //The largest value of N needed to have the sin approximation be right to the fifth decimal place without rounding is 3
+    if(to_string(SUM)==to_string(sin(x)))
+        cout<<"The sin approximation is accurate to the fifth decimal place for N = "<<N<<" or higher."<<endl;
+    else
+        cout<<"Choose Larger N"<<endl
+        
+    return 0;  
+}
